@@ -11,9 +11,10 @@ public class UserManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        GameObject temp = (GameObject)Instantiate(UserPrefab, UserContents.transform);
-        temp.GetComponentInChildren<Text>().text = "Hello" + Random.Range(0, 9999).ToString();
+        GameObject temp = PhotonNetwork.Instantiate(UserPrefab.name, Vector3.zero, Quaternion.identity,0);
+        temp.name = GetComponent<PhotonView>().Owner.NickName;
     }
+
 
     // Update is called once per frame
     void Update()

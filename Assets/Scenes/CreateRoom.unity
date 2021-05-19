@@ -599,6 +599,7 @@ GameObject:
   m_Component:
   - component: {fileID: 385395253}
   - component: {fileID: 385395252}
+  - component: {fileID: 385395254}
   m_Layer: 0
   m_Name: UserManager
   m_TagString: Untagged
@@ -619,7 +620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UserContents: {fileID: 1521301936}
-  UserPrefab: {fileID: 6397857366506982977, guid: 72523d11c644226468df1ad72ec01e94,
+  UserPrefab: {fileID: 9185438461363957590, guid: 1a7d54579541b23439f88c0e78dc091d,
     type: 3}
 --- !u!4 &385395253
 Transform:
@@ -635,6 +636,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &385395254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385395251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 2
+  observableSearch: 0
+  ObservedComponents:
+  - {fileID: 0}
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &449595290
 GameObject:
   m_ObjectHideFlags: 0

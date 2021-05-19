@@ -32,6 +32,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (isConnecting)
         {
             // #Critical: The first we try to do is to join a potential existing room. If there is, good, else, we'll be called back with OnJoinRandomFailed()
+            GetComponent<PhotonView>().Owner.NickName = "Hello" + Random.Range(0, 9999).ToString();
             PhotonNetwork.JoinRandomRoom();
 
         }
