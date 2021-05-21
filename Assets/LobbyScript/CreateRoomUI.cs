@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class CreateRoomUI : MonoBehaviour
 {
@@ -31,6 +33,17 @@ public class CreateRoomUI : MonoBehaviour
                 maxPlayerCountButtons[i].image.color = new Color(1f, 1f, 1f, 0f);
             }
         }
+    }
+    public void GameStart()
+    {
+        SceneManager.LoadScene("Game");
+    }
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+
+        SceneManager.LoadScene("Lobby");
+        //PhotonNetwork.LoadLevel("Lobby");
     }
 }
 

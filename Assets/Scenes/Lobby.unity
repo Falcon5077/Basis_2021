@@ -198,8 +198,6 @@ GameObject:
   - component: {fileID: 213990612}
   - component: {fileID: 213990611}
   - component: {fileID: 213990610}
-  - component: {fileID: 213990613}
-  - component: {fileID: 213990614}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -272,33 +270,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &213990613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 213990609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d79a1503b8c3e76448badcfc52d599f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  joinButton: {fileID: 305960665}
-  SceneNumber: 2
-  maxPlayersPerRoom: 4
---- !u!114 &213990614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 213990609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6f5838b29ef35f48b43b70511148860, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &222888435
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,7 +361,7 @@ GameObject:
   - component: {fileID: 305960666}
   - component: {fileID: 305960665}
   m_Layer: 5
-  m_Name: Button
+  m_Name: MakeRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -459,8 +430,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 213990613}
-        m_MethodName: Connect
+      - m_Target: {fileID: 1569978853}
+        m_MethodName: Create
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -520,7 +491,7 @@ GameObject:
   - component: {fileID: 789607871}
   - component: {fileID: 789607870}
   m_Layer: 5
-  m_Name: Button
+  m_Name: JoinRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -588,7 +559,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 789607871}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1569978853}
+        m_MethodName: Join
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &789607871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -740,7 +722,7 @@ GameObject:
   - component: {fileID: 1207756157}
   - component: {fileID: 1207756156}
   m_Layer: 5
-  m_Name: InputField
+  m_Name: RoomCode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -877,8 +859,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1569978852}
+  - component: {fileID: 1569978853}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -898,6 +881,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1569978853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569978851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d79a1503b8c3e76448badcfc52d599f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  createButton: {fileID: 305960665}
+  joinButton: {fileID: 789607870}
+  inputField: {fileID: 1207756156}
+  SceneNumber: 2
+  maxPlayersPerRoom: 4
 --- !u!1 &1696995552
 GameObject:
   m_ObjectHideFlags: 0

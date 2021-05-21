@@ -12,7 +12,6 @@ public class UserManager : MonoBehaviourPunCallbacks
     void Start()
     {
         GameObject temp = PhotonNetwork.Instantiate(UserPrefab.name, Vector3.zero, Quaternion.identity,0);
-        temp.name = GetComponent<PhotonView>().Owner.NickName;
     }
 
 

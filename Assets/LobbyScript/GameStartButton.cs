@@ -17,8 +17,4 @@ public class GameStartButton : MonoBehaviour
         
     }
 
-    public void GameStart()
-    {
-        SceneManager.LoadScene("Game");
-    }
 }

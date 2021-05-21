@@ -8,7 +8,9 @@ using UnityEngine.UI;
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     private string gameVersion = "1"; // 게임 버전
+    public Button createButton; // 룸 접속 버튼
     public Button joinButton; // 룸 접속 버튼
+    public InputField inputField;
 
     public int SceneNumber;
 
@@ -25,14 +27,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
 
     }
-
     // 마스터 서버 접속 성공시 자동 실행
     public override void OnConnectedToMaster()
     {
         if (isConnecting)
         {
             // #Critical: The first we try to do is to join a potential existing room. If there is, good, else, we'll be called back with OnJoinRandomFailed()
-            GetComponent<PhotonView>().Owner.NickName = "Hello" + Random.Range(0, 9999).ToString();
             PhotonNetwork.JoinRandomRoom();
 
         }
@@ -46,18 +46,39 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    // 룸 접속 시도
-    public void Connect()
+    // 룸 생성 시도
+    public void Create()
     {
         isConnecting = true;
         // 중복 접속 시도를 막기 위해, 접속 버튼 잠시 비활성화
+        createButton.interactable = false;
         joinButton.interactable = false;
 
         // 마스터 서버에 접속중이라면
         if (PhotonNetwork.IsConnected)
         {
             // 룸 접속 실행
-            PhotonNetwork.JoinRandomRoom();
+            //PhotonNetwork.JoinRandomRoom();
+            string code = Random.Range(0, 10).ToString() + Random.Range(0, 10).ToString() + Random.Range(0, 10).ToString() + Random.Range(0, 10).ToString();
+            PhotonNetwork.CreateRoom(code, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
+        }
+        else
+        {
+            // 마스터 서버로의 재접속 시도
+            PhotonNetwork.ConnectUsingSettings();
+        }
+    }
+    public void Join()
+    {
+        isConnecting = true;
+        // 중복 접속 시도를 막기 위해, 접속 버튼 잠시 비활성화
+        createButton.interactable = false;
+        joinButton.interactable = false;
+
+        // 마스터 서버에 접속중이라면
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.JoinRoom(inputField.text);
         }
         else
         {
@@ -71,9 +92,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         // 접속 상태 표시 "빈 방이 없음, 새로운 방 생성..."
         // 최대 4명을 수용 가능한 빈방을 생성
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
+        PhotonNetwork.CreateRoom("Lobby", new RoomOptions { MaxPlayers = maxPlayersPerRoom });
     }
-
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        createButton.interactable = true;
+        joinButton.interactable = true;
+        Debug.Log("코드를 확인해주세요");
+    }
     // 룸에 참가 완료된 경우 자동 실행
     public override void OnJoinedRoom()
     {

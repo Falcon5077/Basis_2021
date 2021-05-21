@@ -1697,6 +1697,7 @@ namespace Photon.Pun
             opParams.RoomOptions = roomOptions;
             opParams.Lobby = typedLobby;
             opParams.ExpectedUsers = expectedUsers;
+            
 
             return NetworkingClient.OpCreateRoom(opParams);
         }
