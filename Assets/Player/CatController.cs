@@ -168,7 +168,7 @@ public class CatController : MonoBehaviourPun
 
         if (col.transform.tag == "Ground")
         {
-            if(GetComponent<Rigidbody2D>().velocity.y == 0)
+            if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.y) <= 0.05f)
                 isJumping = false;
         }
     }
