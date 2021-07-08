@@ -587,8 +587,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 385395253}
-  - component: {fileID: 385395252}
   - component: {fileID: 385395254}
+  - component: {fileID: 385395252}
   m_Layer: 0
   m_Name: UserManager
   m_TagString: Untagged
@@ -605,10 +605,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 385395251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 219e8d07c86057241bda6352930b179b, type: 3}
+  m_Script: {fileID: 11500000, guid: faa8c20126322584ba98498b60b67b52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UserContents: {fileID: 1521301936}
+  UserContents: {fileID: 6397857366506982977, guid: 72523d11c644226468df1ad72ec01e94,
+    type: 3}
   UserPrefab: {fileID: 9185438461363957590, guid: 1a7d54579541b23439f88c0e78dc091d,
     type: 3}
 --- !u!4 &385395253

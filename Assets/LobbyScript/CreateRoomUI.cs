@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
-public class CreateRoomUI : MonoBehaviour
+public class CreateRoomUI : MonoBehaviourPun
 {
     [SerializeField]
     private List<Button> maxPlayerCountButtons;
@@ -14,8 +14,15 @@ public class CreateRoomUI : MonoBehaviour
 
     void Start()
     {
-        roomData = new CreateGameRoomData() {maxPlayerCount = 4 }; 
+        roomData = new CreateGameRoomData() {maxPlayerCount = 4 };
+
     }
+    #region MonoBehaviour CallBacks
+    void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true; 
+    }
+    #endregion
 
     public void UpdateMaxPlayerCount(int count)
     {
@@ -36,12 +43,16 @@ public class CreateRoomUI : MonoBehaviour
     }
     public void GameStart()
     {
-        SceneManager.LoadScene("Game");
+        //SceneManager.LoadScene("Player");   
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");
+        }
+        PhotonNetwork.LoadLevel("Player");
     }
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
-
         SceneManager.LoadScene("Lobby");
         //PhotonNetwork.LoadLevel("Lobby");
     }
