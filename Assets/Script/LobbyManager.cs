@@ -10,12 +10,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private string gameVersion = "1"; // 게임 버전
     public Button createButton; // 룸 접속 버튼
     public Button joinButton; // 룸 접속 버튼
-    public InputField inputField;
+    public InputField inputField; // 방 번호 필드
 
-    public int SceneNumber;
+    public int SceneNumber; 
 
     [SerializeField]
-    private byte maxPlayersPerRoom = 4;
+    private byte maxPlayersPerRoom = 4; // 방 최대 플레이어
     bool isConnecting;
 
     // 게임 실행과 동시에 마스터 서버 접속 시도
@@ -26,17 +26,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 설정한 정보를 가지고 마스터 서버 접속 시도
         PhotonNetwork.ConnectUsingSettings();
 
+
     }
     // 마스터 서버 접속 성공시 자동 실행
-    public override void OnConnectedToMaster()
+  /* public override void OnConnectedToMaster()
     {
+
         if (isConnecting)
         {
+            createButton.interactable = true;
+            joinButton.interactable = true;
             // #Critical: The first we try to do is to join a potential existing room. If there is, good, else, we'll be called back with OnJoinRandomFailed()
             PhotonNetwork.JoinRandomRoom();
 
         }
-    }
+    }*/
 
     // 마스터 서버 접속 실패시 자동 실행
     public override void OnDisconnected(DisconnectCause cause)
@@ -46,6 +50,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
+    private void Update()
+    {
+        if(PhotonNetwork.IsConnected)
+        {
+            createButton.interactable = true;
+            joinButton.interactable = true;
+        }
+    }
     // 룸 생성 시도
     public void Create()
     {
@@ -78,12 +90,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 마스터 서버에 접속중이라면
         if (PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.JoinRoom(inputField.text);
+            if (inputField.text != "")
+            {
+                PhotonNetwork.JoinRoom(inputField.text);
+
+                Debug.Log("코드를 입력해주세요");
+            }
         }
         else
         {
             // 마스터 서버로의 재접속 시도
-            PhotonNetwork.ConnectUsingSettings();
+            //PhotonNetwork.ConnectUsingSettings();
         }
     }
 

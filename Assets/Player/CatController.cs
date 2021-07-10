@@ -63,11 +63,13 @@ public class CatController : MonoBehaviourPun
 
         if (LPress == true)
         {
-            photonView.RPC("MoveLeft", RpcTarget.All);
+            MoveLeft();
+            //photonView.RPC("MoveRight", RpcTarget.All);
         }
         if (RPress == true)
         {
-            photonView.RPC("MoveRight", RpcTarget.All);
+            MoveRight();
+            //photonView.RPC("MoveRight", RpcTarget.All);
         }
 
         MoveKeyboard();
@@ -118,7 +120,8 @@ public class CatController : MonoBehaviourPun
         LPress = true;
         if (m_IsOneClick && ((Time.time - m_Timer) < m_DoubleClickSecond))
         {
-            photonView.RPC("Jump", RpcTarget.All);
+            Jump();
+            //photonView.RPC("Jump", RpcTarget.All);
             m_IsOneClick = false;
         }
     }
@@ -136,7 +139,8 @@ public class CatController : MonoBehaviourPun
         RPress = true;
         if (m_IsOneClick && ((Time.time - m_Timer) < m_DoubleClickSecond))
         {
-            photonView.RPC("Jump", RpcTarget.All);
+            Jump();
+            //photonView.RPC("Jump", RpcTarget.All);
             m_IsOneClick = false;
         }
     }
