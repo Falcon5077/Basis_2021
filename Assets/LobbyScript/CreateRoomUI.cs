@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
-public class CreateRoomUI : MonoBehaviour
+public class CreateRoomUI : MonoBehaviourPun
 {
+
     [SerializeField]
     private List<Button> maxPlayerCountButtons;
 
@@ -14,8 +15,20 @@ public class CreateRoomUI : MonoBehaviour
 
     void Start()
     {
-        roomData = new CreateGameRoomData() {maxPlayerCount = 4 }; 
+        roomData = new CreateGameRoomData() {maxPlayerCount = 4 };
+
     }
+
+    private void Update()
+    {
+
+    }
+    #region MonoBehaviour CallBacks
+    void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true; 
+    }
+    #endregion
 
     public void UpdateMaxPlayerCount(int count)
     {
@@ -33,17 +46,41 @@ public class CreateRoomUI : MonoBehaviour
                 maxPlayerCountButtons[i].image.color = new Color(1f, 1f, 1f, 0f);
             }
         }
+
+        GameObject.Find("UserManager").GetComponent<UserManager>().ChangeMPC(count-1);
     }
     public void GameStart()
     {
-        SceneManager.LoadScene("Game");
+        //SceneManager.LoadScene("Player");   
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");
+        }
+        PhotonNetwork.LoadLevel("Player");
     }
     public void LeaveRoom()
     {
-        PhotonNetwork.LeaveRoom();
+        GameObject userManager = GameObject.Find("UserManager");
+        foreach (Photon.Realtime.Player p in PhotonNetwork.PlayerList)
+        {
+            if (p.ActorNumber != userManager.GetPhotonView().OwnerActorNr)
+            {
+                if(userManager.GetPhotonView().IsMine)
+                    userManager.GetPhotonView().TransferOwnership(p.ActorNumber);
+                Debug.Log(p.ActorNumber);
+                break;
 
-        SceneManager.LoadScene("Lobby");
+            }
+        }
+
+        PhotonNetwork.LeaveRoom();
+        Invoke("OnLeftRoom", 0.3f);
         //PhotonNetwork.LoadLevel("Lobby");
+    }
+
+    public void OnLeftRoom()
+    {
+        SceneManager.LoadScene("Lobby");
     }
 }
 

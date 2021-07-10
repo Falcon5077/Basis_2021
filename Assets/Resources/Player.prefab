@@ -68,4 +68,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Contents: {fileID: 6397857366506982977, guid: 72523d11c644226468df1ad72ec01e94,
     type: 3}
+  MasterUI:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   code: {fileID: 0}
