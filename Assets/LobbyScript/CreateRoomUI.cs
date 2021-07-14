@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using UnityEngine.EventSystems;
 
 public class CreateRoomUI : MonoBehaviourPun
 {
@@ -67,12 +68,13 @@ public class CreateRoomUI : MonoBehaviourPun
             {
                 if(userManager.GetPhotonView().IsMine)
                     userManager.GetPhotonView().TransferOwnership(p.ActorNumber);
-                Debug.Log(p.ActorNumber);
                 break;
 
             }
         }
 
+
+        EventSystem.current.currentSelectedGameObject.GetComponent<Button>().interactable = false;
         PhotonNetwork.LeaveRoom();
         Invoke("OnLeftRoom", 0.3f);
         //PhotonNetwork.LoadLevel("Lobby");

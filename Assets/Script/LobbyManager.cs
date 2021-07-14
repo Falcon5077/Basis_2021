@@ -3,6 +3,7 @@ using Photon.Realtime; // 포톤 서비스 관련 라이브러리
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 // 마스터(매치 메이킹) 서버와 룸 접속을 담당
 public class LobbyManager : MonoBehaviourPunCallbacks
@@ -12,8 +13,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Button joinButton; // 룸 접속 버튼
     public InputField inputField; // 방 번호 필드
 
-    public int SceneNumber; 
-
+    public int SceneNumber;
+    public static bool Connection = false;
     [SerializeField]
     private byte maxPlayersPerRoom = 4; // 방 최대 플레이어
     bool isConnecting;
@@ -26,21 +27,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 설정한 정보를 가지고 마스터 서버 접속 시도
         PhotonNetwork.ConnectUsingSettings();
 
+    } 
 
-    }
-    // 마스터 서버 접속 성공시 자동 실행
-  /* public override void OnConnectedToMaster()
+    public override void OnConnectedToMaster()
     {
-
-        if (isConnecting)
-        {
-            createButton.interactable = true;
-            joinButton.interactable = true;
-            // #Critical: The first we try to do is to join a potential existing room. If there is, good, else, we'll be called back with OnJoinRandomFailed()
-            PhotonNetwork.JoinRandomRoom();
-
-        }
-    }*/
+        Connection = true;
+    }
 
     // 마스터 서버 접속 실패시 자동 실행
     public override void OnDisconnected(DisconnectCause cause)
@@ -52,8 +44,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if(PhotonNetwork.IsConnected)
+        if(Connection == true && !isConnecting)
         {
+
             createButton.interactable = true;
             joinButton.interactable = true;
         }
@@ -93,9 +86,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             if (inputField.text != "")
             {
                 PhotonNetwork.JoinRoom(inputField.text);
-
-                Debug.Log("코드를 입력해주세요");
             }
+            Debug.Log("코드를 입력해주세요");
+            createButton.interactable = true;
+            joinButton.interactable = true;
         }
         else
         {

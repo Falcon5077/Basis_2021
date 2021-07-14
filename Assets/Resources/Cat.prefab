@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -8425752490103275618}
   - component: {fileID: 1056016760}
   - component: {fileID: 1020664117892980970}
+  - component: {fileID: -5272031445532407837}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Ground
@@ -128,7 +129,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -165,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88b013ede1b7c204e8ba6f6c1a1d379a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameClear: 0
 --- !u!114 &1056016760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,3 +223,21 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &-5272031445532407837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4758055915754815317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4115ecc2522f7384bb9e90f74386e808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 0
+  height: 0
+  centerOffset: {x: 0, y: 0, z: 0}
+  followOnStart: 1
+  smoothSpeed: 0.5
+  TargetObj: {fileID: 0}

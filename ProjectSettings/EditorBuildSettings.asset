@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Player.unity
     guid: c4522731f23e68a42bdd00568dd4add0
+  - enabled: 1
+    path: Assets/Scenes/Next.unity
+    guid: 146ea99ca69ab0749abf8268f3dfe83a
   m_configObjects: {}

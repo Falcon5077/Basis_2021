@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class CatController : MonoBehaviourPun
 {
@@ -20,7 +21,8 @@ public class CatController : MonoBehaviourPun
 
     void Awake()
     {
-        GetComponent<Rigidbody2D>().gravityScale = 1f;
+     //   GetComponent<Rigidbody2D>().gravityScale = 1f;
+
         if (photonView.IsMine)
         {
             LB = GameObject.Find("LButton");
@@ -45,9 +47,27 @@ public class CatController : MonoBehaviourPun
             entry4.eventID = EventTriggerType.PointerUp;
             entry4.callback.AddListener((eventData) => { RButtonUp(); });
             RB.GetComponent<EventTrigger>().triggers.Add(entry4);
-
         }
     }
+
+    // called first
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    // called second
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if(GameObject.Find("LButton") == true)
+            Awake();
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -64,11 +84,19 @@ public class CatController : MonoBehaviourPun
         if (LPress == true)
         {
             MoveLeft();
+            if (RPress == true)
+            {
+                RPress = false;
+            }
             //photonView.RPC("MoveRight", RpcTarget.All);
         }
         if (RPress == true)
         {
             MoveRight();
+            if (LPress == true)
+            {
+                LPress = false;
+            }
             //photonView.RPC("MoveRight", RpcTarget.All);
         }
 

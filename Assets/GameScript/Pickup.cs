@@ -2,28 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
-public class Pickup : MonoBehaviour
+public class Pickup : MonoBehaviourPunCallbacks
 {
-    private int GameClear = 0;
+    public int GameClear = 0;
 
+    GameObject gameManager;
+
+    private void Start()
+    {
+        gameManager = GameObject.Find("GameManager");
+    }
     void OnTriggerEnter2D(Collider2D other)
     {
-
         if (other.gameObject.tag.Equals("Key"))
         {
             Destroy(other.gameObject);
-            GameClear ++;
+            gameManager.GetComponent<Game_Manager>().photonView.RPC("GetKey", RpcTarget.All);
         }
 
         if (other.gameObject.tag.Equals("Exit"))
         {
-            if(GameClear == 1)
+            if(gameManager.GetComponent<Game_Manager>().Key >= 1)
             {
-                Destroy(other.gameObject);
-                transform.position = new Vector3(20, -10, 0);
-
+                if (photonView.IsMine)
+                {
+                    //Destroy(other.gameObject);
+                    //transform.position = Vector3.zero;
+                    LeaveRoom();
+                }
+                //transform.position = new Vector3(20, -10, 0);
             }
         }
+    }
+    public void LeaveRoom()
+    {
+        Game_Manager.instance.ChangeScene();
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LeaveLobby();
+        //PhotonNetwork.Destroy(this.gameObject);
+
     }
 } 
