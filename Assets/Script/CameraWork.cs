@@ -1,7 +1,17 @@
-﻿using UnityEngine;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CameraWork.cs" company="Exit Games GmbH">
+//   Part of: Photon Unity Networking Demos
+// </copyright>
+// <summary>
+//  Used in PUN Basics Tutorial to deal with the Camera work to follow the player
+// </summary>
+// <author>developer@exitgames.com</author>
+// --------------------------------------------------------------------------------------------------------------------
 
 
-namespace Photon.Pun.Demo.PunBasics
+using UnityEngine;
+
+namespace CameraWorks
 {
     /// <summary>
     /// Camera work. Follow a target
@@ -13,12 +23,12 @@ namespace Photon.Pun.Demo.PunBasics
 
         [Tooltip("The distance in the local x-z plane to the target")]
         [SerializeField]
-        private float distance = 7.0f;
+        private float distance = 0.0f;
 
 
         [Tooltip("The height we want the camera to be above the target")]
         [SerializeField]
-        private float height = 3.0f;
+        private float height = 0.0f;
 
 
         [Tooltip("Allow the camera to be offseted vertically from the target, for example giving more view of the sceneray and less ground.")]
@@ -33,7 +43,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         [Tooltip("The Smoothing for the camera to follow the target")]
         [SerializeField]
-        private float smoothSpeed = 0.5f;
+        private float smoothSpeed = 5.0f;
 
 
         // cached transform of the target
@@ -47,7 +57,6 @@ namespace Photon.Pun.Demo.PunBasics
         // Cache for camera offset set z to default value for 2d
         Vector3 cameraOffset = new Vector3(0.0f, 0.0f, -10.0f);
 
-        public GameObject TargetObj;
 
         #endregion
 
@@ -63,13 +72,12 @@ namespace Photon.Pun.Demo.PunBasics
             // Start following the target if wanted.
             if (followOnStart)
             {
-                TargetObj = this.gameObject;
                 OnStartFollowing();
             }
         }
 
 
-        void Update()
+        void LateUpdate()
         {
             // The transform target may not destroy on level load,
             // so we need to cover corner cases where the Main Camera is different everytime we load a new scene, and reconnect when that happens
@@ -138,11 +146,13 @@ namespace Photon.Pun.Demo.PunBasics
             cameraOffset.y = height;
 
 
-            cameraTransform.position = TargetObj.transform.position + this.transform.TransformVector(cameraOffset);
+            cameraTransform.position = this.transform.position + this.transform.TransformVector(cameraOffset);
 
 
             //cameraTransform.LookAt(this.transform.position + centerOffset);
         }
+
+
         #endregion
     }
 }

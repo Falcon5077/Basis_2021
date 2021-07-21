@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
@@ -9,17 +10,23 @@ public class Pickup : MonoBehaviourPunCallbacks
     public int GameClear = 0;
 
     GameObject gameManager;
+    SpriteRenderer spriteRenderer;
 
     private void Start()
     {
         gameManager = GameObject.Find("GameManager");
+
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag.Equals("Key"))
         {
             Destroy(other.gameObject);
-            gameManager.GetComponent<Game_Manager>().photonView.RPC("GetKey", RpcTarget.All);
+            if (photonView.IsMine)
+            {
+                gameManager.GetComponent<Game_Manager>().photonView.RPC("GetKey", RpcTarget.All);
+            }
         }
 
         if (other.gameObject.tag.Equals("Exit"))
@@ -36,6 +43,7 @@ public class Pickup : MonoBehaviourPunCallbacks
             }
         }
     }
+
     public void LeaveRoom()
     {
         Game_Manager.instance.ChangeScene();

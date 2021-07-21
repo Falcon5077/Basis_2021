@@ -240,4 +240,3 @@ MonoBehaviour:
   centerOffset: {x: 0, y: 0, z: 0}
   followOnStart: 1
   smoothSpeed: 0.5
-  TargetObj: {fileID: 0}

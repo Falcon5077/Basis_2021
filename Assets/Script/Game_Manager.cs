@@ -11,11 +11,10 @@ public class Game_Manager : MonoBehaviourPun
     public static Game_Manager instance;
     public GameObject playerPrefab;
     public static GameObject LocalPlayerInstance;
-
+    SpriteRenderer spriteRenderer;
 
     public int Key = 0;
-
-
+    public int Button_pressed = 0;
 
     [PunRPC]
     public void GetKey()
@@ -23,6 +22,17 @@ public class Game_Manager : MonoBehaviourPun
         Key++;
     }
 
+    [PunRPC]
+    public void Button_Interaction_1()
+    {
+        Button_pressed++;
+    }
+   
+    [PunRPC]
+    public void Button_Interaction_0()
+    {
+        Button_pressed--;
+    }
 
     // Start is called before the first frame update
     void Start()
