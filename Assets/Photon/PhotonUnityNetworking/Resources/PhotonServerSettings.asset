@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AppSettings:
     AppIdRealtime: 725ecfd8-8c8c-424d-aa69-71240b172c38
+    AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
     AppVersion: 
@@ -32,7 +33,20 @@ MonoBehaviour:
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
-  RpcList: []
+  RpcList:
+  - Button_Interaction_0
+  - Button_Interaction_1
+  - ClickRpc
+  - DestroyRpc
+  - DestroySpaceship
+  - Fire
+  - GetKey
+  - Jump
+  - MaxPlayerCount
+  - MoveLeft
+  - MoveRight
+  - RespawnSpaceship
+  - EmotionCall
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

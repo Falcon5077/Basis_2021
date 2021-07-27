@@ -9,6 +9,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
+using Photon.Pun;
 using UnityEngine;
 
 namespace CameraWorks
@@ -16,7 +17,7 @@ namespace CameraWorks
     /// <summary>
     /// Camera work. Follow a target
     /// </summary>
-    public class CameraWork : MonoBehaviour
+    public class CameraWork : MonoBehaviourPunCallbacks
     {
         #region Private Fields
 
@@ -69,6 +70,10 @@ namespace CameraWorks
         /// </summary>
         void Start()
         {
+            if(!photonView.IsMine)
+            {
+                GetComponent<CameraWork>().enabled = false;
+            }
             // Start following the target if wanted.
             if (followOnStart)
             {
