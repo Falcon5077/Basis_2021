@@ -44,7 +44,7 @@ namespace CameraWorks
 
         [Tooltip("The Smoothing for the camera to follow the target")]
         [SerializeField]
-        private float smoothSpeed = 5.0f;
+        private float smoothSpeed = 10.0f;
 
 
         // cached transform of the target
@@ -70,9 +70,14 @@ namespace CameraWorks
         /// </summary>
         void Start()
         {
-            if(!photonView.IsMine)
+            if (!photonView.IsMine)
             {
+                ViewChanger.instance.Players.Add(this.gameObject);
                 GetComponent<CameraWork>().enabled = false;
+            }
+            else
+            {
+                ViewChanger.instance.Players.Insert(0, this.gameObject);
             }
             // Start following the target if wanted.
             if (followOnStart)

@@ -6,8 +6,22 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
 
+[System.Serializable]
+public class StageList
+{
+    public int[] Chapter;
+}
+
 public class Game_Manager : MonoBehaviourPun
 {
+    //Stage[1].Chapter[0]
+    public StageList[] Stage;
+    public int CurrentChapter = 1;
+    public int CurrentStage = 1;
+    public bool CanNextStage = false;
+
+    public int gameClear = 0;
+
     public static Game_Manager instance;
     public GameObject playerPrefab;
     public static GameObject LocalPlayerInstance;
@@ -15,6 +29,47 @@ public class Game_Manager : MonoBehaviourPun
 
     public int Key = 0;
     public int Button_pressed = 0;
+
+    private void Update()
+    {
+        if(Stage[CurrentStage-1].Chapter[CurrentChapter-1] == 0)
+        {
+            CanNextStage = true;
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+
+            PhotonNetwork.LeaveRoom();
+            Invoke("OnLeftRoom", 0.3f);
+        }
+    }
+public void OnLeftRoom()
+{
+    SceneManager.LoadScene("Lobby");
+}
+
+[PunRPC]
+    public void rpcPass()
+    {
+        ++gameClear;
+    }
+    [PunRPC]
+    public void NextChapter()
+    {
+        if (PhotonNetwork.CurrentRoom.PlayerCount == gameClear)
+        {
+            ViewChanger.instance.CamOnMyPlayer();
+            CanNextStage = false;
+            CurrentChapter += 1;
+            gameClear = 0;
+        }
+
+    }
+    public void ChangeValue(int value)
+    {
+        Stage[CurrentStage - 1].Chapter[CurrentChapter - 1] -= value;
+    }
 
     [PunRPC]
     public void GetKey()

@@ -21,6 +21,8 @@ namespace Player
         public GameObject LB;
         public GameObject RB;
 
+        public Transform PlayerSprite;
+
         #region MonoBehaviour Callbacks
 
         /// <summary>
@@ -29,6 +31,7 @@ namespace Player
         void Start()
         {
             CameraWork _cameraWork = this.gameObject.GetComponent<CameraWork>();
+            PlayerSprite = transform.GetChild(0);
 
             if (_cameraWork != null)
             {
@@ -84,6 +87,14 @@ namespace Player
                 return;
             }
 
+            if (GetComponent<CameraWork>().enabled == false)
+            {
+                m_IsOneClick = false;
+                LPress = false;
+                RPress = false;
+                return;
+            }
+
             if (m_IsOneClick && ((Time.time - m_Timer) > m_DoubleClickSecond))
             {
                 m_IsOneClick = false;
@@ -101,6 +112,8 @@ namespace Player
             }
 
             MoveKeyboard();
+            //CheckGround();
+
         }
 
         public void MoveKeyboard()
@@ -118,18 +131,20 @@ namespace Player
             {
                 if (m_IsOneClick && ((Time.time - m_Timer) < m_DoubleClickSecond))
                 {
-                    photonView.RPC("Jump", RpcTarget.All);
+                    Jump();
                     m_IsOneClick = false;
                 }
             }
 
             if (Input.GetKey(KeyCode.A))
             {
-                photonView.RPC("MoveLeft", RpcTarget.All);
+                MoveLeft();
+                //photonView.RPC("MoveLeft", RpcTarget.All);
             }
             if (Input.GetKey(KeyCode.D))
             {
-                photonView.RPC("MoveRight", RpcTarget.All);
+                MoveRight();
+                //photonView.RPC("MoveRight", RpcTarget.All);
             }
 
         }
@@ -175,35 +190,54 @@ namespace Player
         [PunRPC]
         void MoveLeft()
         {
+            PlayerSprite.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
             transform.Translate(new Vector3(-mspeed * Time.deltaTime, 0, 0));
         }
         [PunRPC]
         void MoveRight()
         {
+            PlayerSprite.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
             transform.Translate(new Vector3(mspeed * Time.deltaTime, 0, 0));
 
         }
-
         [PunRPC]
         void Jump()
         {
             if (isJumping == false)
             {
                 isJumping = true;
-                GetComponent<Rigidbody2D>().AddForce(Vector3.up * 300f);
-                // StartCoroutine("JButtonUp");
+                GetComponent<Rigidbody2D>().AddForce(Vector3.up * 260f);
             }
         }
 
-        void OnCollisionEnter2D(Collision2D col)
+        void OnCollisionStay2D(Collision2D col)
         {
-
             if (col.transform.tag == "Ground")
             {
                 if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.y) <= 0.05f)
                     isJumping = false;
             }
         }
+        void CheckGround()
+        {
+            RaycastHit hit;
+            Debug.DrawRay(transform.position, Vector3.left * 0.9f, Color.red);
+            Debug.DrawRay(transform.position, Vector3.right * 0.9f, Color.red);
 
+            if (isJumping == true)
+            {
+                if (Physics.Raycast(transform.position, Vector3.left, out hit, 0.9f) || Physics.Raycast(transform.position, Vector3.right, out hit, 0.9f))
+                {
+                    if (hit.transform.tag == "Ground")
+                    {
+                        Debug.Log("You cant Jump");
+                        isJumping = true;
+                        return;
+                    }
+                }
+
+            }
+
+        }
     }
 }
