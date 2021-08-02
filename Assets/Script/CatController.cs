@@ -160,6 +160,9 @@ namespace Player
         }
         public void LButtonDown()
         {
+            if (RPress)
+                return;
+
             LPress = true;
             if (m_IsOneClick && ((Time.time - m_Timer) < m_DoubleClickSecond))
             {
@@ -179,6 +182,9 @@ namespace Player
         }
         public void RButtonDown()
         {
+            if (LPress)
+                return;
+
             RPress = true;
             if (m_IsOneClick && ((Time.time - m_Timer) < m_DoubleClickSecond))
             {
