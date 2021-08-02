@@ -212,6 +212,7 @@ namespace Player
             if (isJumping == false)
             {
                 isJumping = true;
+                GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                 GetComponent<Rigidbody2D>().AddForce(Vector3.up * 260f);
             }
         }

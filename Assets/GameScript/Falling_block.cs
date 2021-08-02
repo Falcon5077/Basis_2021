@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Player;
 
 public class Falling_block : MonoBehaviour
 {
@@ -10,8 +11,11 @@ public class Falling_block : MonoBehaviour
     [System.Serializable]
     public enum BoxType
     {
+        none,
         FallingBox,
         SwtichBox,
+        JumpingBox,
+        TeleportBox,
         ButtonBox
     }
     public BoxType boxType;
@@ -22,6 +26,10 @@ public class Falling_block : MonoBehaviour
     public Vector3 EndPos;
     public bool dropBox;
     public float dropSpeed;
+
+    public float jumpForce;
+
+    public Transform tpTarget;
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +75,23 @@ public class Falling_block : MonoBehaviour
         {
             dropBox = true;
             CancelInvoke("InvokeDropBox");
+        }
+        if (boxType == BoxType.JumpingBox)
+        {
+            if (other.gameObject.tag.Equals("Ground"))
+            {
+                other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                other.gameObject.GetComponent<CatController>().isJumping = false;
+                other.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector3.up * jumpForce);
+            }
+        }
+
+        if (boxType == BoxType.TeleportBox)
+        {
+            if (other.gameObject.tag.Equals("Ground"))
+            {
+                other.gameObject.transform.position = tpTarget.position;
+            }
         }
     }
     private void OnCollisionExit2D(Collision2D other)
