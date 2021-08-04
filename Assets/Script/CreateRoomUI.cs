@@ -57,7 +57,7 @@ public class CreateRoomUI : MonoBehaviourPun
         {
             Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");
         }
-        PhotonNetwork.LoadLevel("Player");
+        PhotonNetwork.LoadLevel("1-1");
     }
     public void LeaveRoom()
     {

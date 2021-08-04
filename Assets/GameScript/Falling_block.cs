@@ -81,7 +81,8 @@ public class Falling_block : MonoBehaviour
             if (other.gameObject.tag.Equals("Ground"))
             {
                 other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-                other.gameObject.GetComponent<CatController>().isJumping = false;
+                if(other.gameObject.GetComponent<CatController>() != null)
+                    other.gameObject.GetComponent<CatController>().isJumping = false;
                 other.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector3.up * jumpForce);
             }
         }

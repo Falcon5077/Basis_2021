@@ -49,6 +49,7 @@ MonoBehaviour:
   - EmotionCall
   - rpcPass
   - NextChapter
+  - DestroySelf
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

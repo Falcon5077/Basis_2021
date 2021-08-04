@@ -39,14 +39,22 @@ public class Game_Manager : MonoBehaviourPun
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-
-            PhotonNetwork.LeaveRoom();
-            Invoke("OnLeftRoom", 0.3f);
+            leave();
         }
     }
+
+    public void leave()
+    {
+        PhotonNetwork.LeaveRoom();
+        Invoke("OnLeftRoom", 0.3f);
+
+    }
 public void OnLeftRoom()
-{
-    SceneManager.LoadScene("Lobby");
+    {
+        Destroy(GameObject.Find("Canvas")); 
+        var obj = FindObjectsOfType<Game_Manager>();
+        Destroy(obj[0].gameObject);
+        SceneManager.LoadScene("Lobby");
 }
 
 [PunRPC]
@@ -59,13 +67,31 @@ public void OnLeftRoom()
     {
         if (PhotonNetwork.CurrentRoom.PlayerCount == gameClear)
         {
-            ViewChanger.instance.CamOnMyPlayer();
             CanNextStage = false;
             CurrentChapter += 1;
+            if (CurrentChapter == 4)
+            {
+                CurrentChapter = 1;
+                CurrentStage += 1;
+                GameStart();
+            }
+            else
+            {
+                ViewChanger.instance.CamOnMyPlayer();
+            }
+
             gameClear = 0;
         }
-
     }
+    public void GameStart()
+    {
+        ViewChanger.instance.CamOnMyPlayer();
+        if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount == gameClear)
+        {
+            PhotonNetwork.LoadLevel("2-1");
+        }
+    }
+
     public void ChangeValue(int value)
     {
         Stage[CurrentStage - 1].Chapter[CurrentChapter - 1] -= value;
@@ -92,7 +118,10 @@ public void OnLeftRoom()
     // Start is called before the first frame update
     void Start()
     {
-        if(instance == null)
+        GameObject canvas = GameObject.Find("Canvas");
+        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(canvas);
+        if (instance == null)
             instance = this;
         if (playerPrefab == null)
         {
@@ -102,8 +131,8 @@ public void OnLeftRoom()
         {
             //Debug.LogFormat("We are Instantiating LocalPlayer from {0}", Application.loadedLevelName);
             GameObject temp = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
-            DontDestroyOnLoad(temp);
             // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
+
         }
     }
 

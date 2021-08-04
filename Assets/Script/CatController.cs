@@ -30,6 +30,7 @@ namespace Player
         /// </summary>
         void Start()
         {
+            DontDestroyOnLoad(this.gameObject);
             CameraWork _cameraWork = this.gameObject.GetComponent<CameraWork>();
             PlayerSprite = transform.GetChild(0);
 
@@ -204,6 +205,15 @@ namespace Player
         {
             PlayerSprite.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
             transform.Translate(new Vector3(mspeed * Time.deltaTime, 0, 0));
+
+        }
+        [PunRPC]
+        void DestroySelf()
+        {
+            if(photonView.IsMine)
+            {
+                PhotonNetwork.Destroy(this.gameObject);
+            }
 
         }
         [PunRPC]
