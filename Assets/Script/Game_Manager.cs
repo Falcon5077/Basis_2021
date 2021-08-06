@@ -49,13 +49,13 @@ public class Game_Manager : MonoBehaviourPun
         Invoke("OnLeftRoom", 0.3f);
 
     }
-public void OnLeftRoom()
+    public void OnLeftRoom()
     {
         Destroy(GameObject.Find("Canvas")); 
         var obj = FindObjectsOfType<Game_Manager>();
         Destroy(obj[0].gameObject);
         SceneManager.LoadScene("Lobby");
-}
+    }
 
 [PunRPC]
     public void rpcPass()
@@ -75,17 +75,14 @@ public void OnLeftRoom()
                 CurrentStage += 1;
                 GameStart();
             }
-            else
-            {
-                ViewChanger.instance.CamOnMyPlayer();
-            }
+
+            ViewChanger.instance.CamOnMyPlayer();
 
             gameClear = 0;
         }
     }
     public void GameStart()
     {
-        ViewChanger.instance.CamOnMyPlayer();
         if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount == gameClear)
         {
             PhotonNetwork.LoadLevel("2-1");

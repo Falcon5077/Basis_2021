@@ -12,33 +12,14 @@ public class Pickup : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<Game_Manager>();
+        //gameManager = GameObject.Find("GameManager").GetComponent<Game_Manager>();
     }
     void OnTriggerEnter2D(Collider2D other)
     {
         if (gameObject.tag.Equals("Key")) {
-                gameManager.ChangeValue(KeyValue);
-                Destroy(this.gameObject);
+            //gameManager.ChangeValue(KeyValue);
+            Game_Manager.instance.ChangeValue(KeyValue);
+            Destroy(this.gameObject);
         }
-        /*if (other.gameObject.tag.Equals("Exit"))
-        {
-            if(gameManager.GetComponent<Game_Manager>().Key >= 1)
-            {
-                if (photonView.IsMine)
-                {
-                    LeaveRoom();
-                }
-            }
-        }
-        */
-    }
-
-    public void LeaveRoom()
-    {
-        Game_Manager.instance.ChangeScene();
-        PhotonNetwork.LeaveRoom();
-        PhotonNetwork.LeaveLobby();
-        //PhotonNetwork.Destroy(this.gameObject);
-
     }
 } 

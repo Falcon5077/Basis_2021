@@ -5579,7 +5579,6 @@ MonoBehaviour:
   Stage:
   - Chapter: 010000000000000001000000
   - Chapter: 010000000000000000000000
-  - Chapter: 000000000000000000000000
   CurrentChapter: 1
   CurrentStage: 1
   CanNextStage: 0

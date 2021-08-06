@@ -87,7 +87,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             {
                 PhotonNetwork.JoinRoom(inputField.text);
             }
-            Debug.Log("코드를 입력해주세요");
+            else
+            {
+                Debug.Log("코드를 입력해주세요");
+            }
+
             createButton.interactable = true;
             joinButton.interactable = true;
         }
@@ -115,17 +119,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         PhotonNetwork.LoadLevel(SceneNumber);
-        /*
-
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-        {
-            //
-        }
-        // 접속 상태 표시
-
-        PhotonNetwork.LoadLevel("Room for " + PhotonNetwork.CurrentRoom.PlayerCount);
-        // 모든 룸 참가자들이 Main 씬을 로드하게 함
-        //PhotonNetwork.LoadLevel(Random.Range(1,5));*/
     }
 }
 

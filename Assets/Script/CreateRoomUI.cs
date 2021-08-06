@@ -52,7 +52,6 @@ public class CreateRoomUI : MonoBehaviourPun
     }
     public void GameStart()
     {
-        //SceneManager.LoadScene("Player");   
         if (!PhotonNetwork.IsMasterClient)
         {
             Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");

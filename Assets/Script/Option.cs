@@ -6,16 +6,15 @@ public class Option : MonoBehaviour
 {
     public GameObject OptionPanel;
     public bool buttonOnOff;
-    // Start is called before the first frame update
-    void Start()
+    public void Option_On()
     {
-
+        buttonOnOff = true;
+        OptionPanel.SetActive(buttonOnOff);
     }
 
-    // Update is called once per frame
-    public void Option_Button( )
+    public void Option_Off()
     {
-        buttonOnOff = !buttonOnOff;
+        buttonOnOff = false;
         OptionPanel.SetActive(buttonOnOff);
     }
 }
