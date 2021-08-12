@@ -139,13 +139,13 @@ namespace Player
 
             if (Input.GetKey(KeyCode.A))
             {
-                //MoveLeft();
-                photonView.RPC("MoveLeft", RpcTarget.All);
+                MoveLeft();
+                //photonView.RPC("MoveLeft", RpcTarget.All);
             }
             if (Input.GetKey(KeyCode.D))
             {
-                //MoveRight();
-                photonView.RPC("MoveRight", RpcTarget.All);
+                MoveRight();
+                //photonView.RPC("MoveRight", RpcTarget.All);
             }
 
         }

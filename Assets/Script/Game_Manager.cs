@@ -27,7 +27,7 @@ public class Game_Manager : MonoBehaviourPun
     public static GameObject LocalPlayerInstance;
     SpriteRenderer spriteRenderer;
 
-    public int Key = 0;
+    public int minSize;
     private void Update()
     {
         if(Stage[CurrentStage-1].Chapter[CurrentChapter-1] == 0)
@@ -67,7 +67,7 @@ public class Game_Manager : MonoBehaviourPun
         {
             CanNextStage = false;
             CurrentChapter += 1;
-            if (CurrentChapter == 4)
+            if (CurrentChapter == minSize+1)
             {
                 CurrentChapter = 1;
                 CurrentStage += 1;

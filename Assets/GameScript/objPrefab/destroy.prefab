@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7257744828875535963}
   - component: {fileID: 7257744828875535962}
   - component: {fileID: 7257744828875535965}
+  - component: {fileID: 3276101960660114083}
   - component: {fileID: 7257744828875535964}
   - component: {fileID: 7257744828875535967}
   - component: {fileID: -8681736430833975013}
@@ -112,6 +113,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.925, y: 0.93}
   m_EdgeRadius: 0
+--- !u!50 &3276101960660114083
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7257744828875535966}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!114 &7257744828875535964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,11 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562fd9fb40df64d46bd3abc98e4f25e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myButton: {fileID: 0}
   boxType: 1
-  StartPos: {x: 0, y: 0, z: 0}
   EndPos: {x: 5, y: 0, z: 0}
-  dropBox: 0
-  dropSpeed: 3
+  moveSpeed: 0
   jumpForce: 0
   tpTarget: {fileID: 0}
 --- !u!114 &7257744828875535967
@@ -143,9 +164,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6716dda38af061448dd285b3f361803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 1
-  setTime: 1
+  time: 3
+  setTime: 3
   FallingBlock: {fileID: 0}
+  dis: -1
+  way: 1
 --- !u!114 &-8681736430833975013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,7 +221,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 1020664117892980970, guid: 361aa07b59c8eb24a85478375c910407, type: 3}
+  - {fileID: -8681736430833975013}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

@@ -9,6 +9,9 @@ public class Falling_block_Time : MonoBehaviour
     [SerializeField] 
     public float setTime = 2.0f;
     public GameObject FallingBlock;
+
+    public float dis = 0.1f;
+    public bool way = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +22,24 @@ public class Falling_block_Time : MonoBehaviour
     void Update()
     {
         if (setTime > 0)
+        {
             setTime -= Time.deltaTime;
-        else if (setTime <=0 && setTime > -1)
+            if (setTime <= 1.5f)
+            {
+                if (way == true)
+                    dis += 0.25f;
+                if (way == false)
+                    dis -= 0.25f;
+
+                if (dis >= 1)
+                    way = false;
+                if (dis <= -1)
+                    way = true;
+
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, (3 - setTime) * dis));
+            }
+        }
+        else if (setTime <= 0 && setTime > -1)
         {
             Destroy(FallingBlock);
         }

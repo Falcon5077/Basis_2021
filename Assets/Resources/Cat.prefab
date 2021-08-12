@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1020664117892980970}
   - component: {fileID: -5272031445532407837}
   - component: {fileID: -8626324819372541423}
-  - component: {fileID: 4758055915754815320}
+  - component: {fileID: 5395749784468869598}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Ground
@@ -226,7 +226,7 @@ MonoBehaviour:
   - {fileID: 3108424491726315753, guid: 906a260739388d14ea84789f2babcf3d, type: 3}
   - {fileID: 6830297506581310004, guid: 36a307cab4931a34bb6e2c3bfc92bb8b, type: 3}
   isEmoticonOn: 0
---- !u!114 &4758055915754815320
+--- !u!114 &5395749784468869598
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,10 +235,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4758055915754815317}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8838aa4f05a33f445860c69c9f60307e, type: 3}
+  m_Script: {fileID: 11500000, guid: a28da19c01f4e62449b74772472d9369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mspeed: 2.5
+  mspeed: 3
   LPress: 0
   RPress: 0
   isJumping: 0

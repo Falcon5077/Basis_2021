@@ -86,6 +86,7 @@ public class BoxScript : MonoBehaviour
         {
             if (other.gameObject.tag.Equals("Ground"))
             {
+                CancelInvoke("InvokeStopShake");
                 fbT.enabled = true;
             }
         }
@@ -120,15 +121,20 @@ public class BoxScript : MonoBehaviour
         {
             if (other.gameObject.tag.Equals("Ground"))
             {
-                fbT.setTime = fbT.time;
-                fbT.enabled = false;
+                Invoke("InvokeStopShake", 0.2f);
             }
         }
 
         if (boxType == BoxType.MoveBox && isBoxMoving == true)
         {
-            Invoke("InvokeisBoxMoving", 1f);
+            Invoke("InvokeisBoxMoving", 0.75f);
         }
+    }
+    void InvokeStopShake()
+    {
+        fbT.setTime = fbT.time;
+        fbT.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        fbT.enabled = false;
     }
 
     void InvokeisBoxMoving()
