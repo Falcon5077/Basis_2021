@@ -205,11 +205,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562fd9fb40df64d46bd3abc98e4f25e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myButton: {fileID: 0}
   boxType: 2
-  StartPos: {x: 0, y: 0, z: 0}
   EndPos: {x: 3.5, y: 3, z: 0}
-  dropBox: 0
-  dropSpeed: 3
+  moveSpeed: 3
   jumpForce: 0
   tpTarget: {fileID: 0}
 --- !u!114 &-2851994854367673469

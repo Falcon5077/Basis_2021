@@ -9,7 +9,7 @@ public class UserManager : MonoBehaviourPunCallbacks
     public GameObject UserContents;
     public GameObject UserPrefab;
 
-    public GameObject[] MasterUI;
+    public GameObject StartBtn;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +17,7 @@ public class UserManager : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < 5; i++)
         {
-            MasterUI[i] = GameObject.Find("Button" + (i + 1).ToString());
+            StartBtn = GameObject.Find("Start");
 
         }
 
@@ -31,37 +31,9 @@ public class UserManager : MonoBehaviourPunCallbacks
         {
             if (photonView.Owner.IsMasterClient)
             {
-                for (int i = 0; i < 5; i++)
-                {
-                    MasterUI[i].GetComponent<Button>().interactable = true;
-
-                }
+                StartBtn.GetComponent<Button>().interactable = true;
             }
         }
-    }
-
-    [PunRPC]
-    void MaxPlayerCount(int a)
-    {
-
-        for (int i = 0; i < 4; i++)
-        {
-            if (i == a)
-            {
-                MasterUI[i].GetComponent<Button>().image.color = new Color(1f, 1f, 1f, 1f);
-            }
-
-            else
-            {
-                MasterUI[i].GetComponent<Button>().image.color = new Color(1f, 1f, 1f, 0f);
-            }
-        }
-
-    }
-
-    public void ChangeMPC(int a)
-    {
-        photonView.RPC("MaxPlayerCount", RpcTarget.AllBuffered,a);
     }
 }
 

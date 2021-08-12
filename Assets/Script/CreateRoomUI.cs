@@ -31,25 +31,6 @@ public class CreateRoomUI : MonoBehaviourPun
     }
     #endregion
 
-    public void UpdateMaxPlayerCount(int count)
-    {
-        roomData.maxPlayerCount = count;
-
-        for(int i = 0; i < maxPlayerCountButtons.Count; i++)
-        {
-            if (i == count - 1)
-            {
-                maxPlayerCountButtons[i].image.color = new Color(1f, 1f, 1f, 1f);
-            }
-            
-            else
-            {
-                maxPlayerCountButtons[i].image.color = new Color(1f, 1f, 1f, 0f);
-            }
-        }
-
-        GameObject.Find("UserManager").GetComponent<UserManager>().ChangeMPC(count-1);
-    }
     public void GameStart()
     {
         if (!PhotonNetwork.IsMasterClient)

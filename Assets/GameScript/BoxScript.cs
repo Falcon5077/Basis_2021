@@ -4,42 +4,49 @@ using UnityEngine;
 using UnityEngine.UI;
 using Player;
 
-public class Falling_block : MonoBehaviour
+public class BoxScript : MonoBehaviour
 {
     Collider ObjectCollider;
+    public buttonBox myButton;
 
-    [System.Serializable]
+    [System.Serializable]   // 인스펙터 창에서 볼수있게 하는 설정
     public enum BoxType
     {
         none,
-        FallingBox,
-        SwtichBox,
+        DestroyBox,
+        MoveBox,
         JumpingBox,
         TeleportBox,
         ButtonBox
     }
+
+    [Header(" - Must Set Box Type")]
     public BoxType boxType;
 
     Falling_block_Time fbT;
 
-    public Vector3 StartPos;
-    public Vector3 EndPos;
-    public bool dropBox;
-    public float dropSpeed;
+    private Vector3 StartPos;
 
+    [Header(" - MoveBox Option")]
+    public Vector3 EndPos;
+    public float moveSpeed;
+    private bool isBoxMoving;
+
+    [Header(" - JumpingBox Option")]
     public float jumpForce;
 
+    [Header(" - TeleportBox Option")]
     public Transform tpTarget;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (boxType == BoxType.FallingBox)
+        if (boxType == BoxType.DestroyBox || boxType == BoxType.ButtonBox) // 주성
         {
             fbT = gameObject.GetComponent<Falling_block_Time>();
         }
 
-        if(boxType == BoxType.SwtichBox)
+        if(boxType == BoxType.MoveBox || boxType == BoxType.ButtonBox)//주성
         {
             StartPos = transform.position;
         }
@@ -48,22 +55,34 @@ public class Falling_block : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (boxType == BoxType.SwtichBox)
+        if (boxType == BoxType.MoveBox || boxType == BoxType.ButtonBox)//주성
         {
-            if (dropBox)
+            if (isBoxMoving)
             {
-                transform.position = Vector3.MoveTowards(transform.position, EndPos, dropSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, EndPos, moveSpeed * Time.deltaTime);
             }
-            else if (!dropBox)
+            else if (!isBoxMoving)
             {
-                transform.position = Vector3.MoveTowards(transform.position, StartPos, dropSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, StartPos, moveSpeed * Time.deltaTime);
+            }
+        }
+
+        if (boxType == BoxType.ButtonBox)//주성
+        {
+            if (myButton.Button_pressed == false)
+            {
+                isBoxMoving = false;
+            }
+            else if (myButton.Button_pressed == true)
+            {
+                isBoxMoving = true;
             }
         }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (boxType == BoxType.FallingBox)
+        if (boxType == BoxType.DestroyBox)
         {
             if (other.gameObject.tag.Equals("Ground"))
             {
@@ -71,18 +90,18 @@ public class Falling_block : MonoBehaviour
             }
         }
 
-        if (boxType == BoxType.SwtichBox)
+        if (boxType == BoxType.MoveBox)
         {
-            dropBox = true;
-            CancelInvoke("InvokeDropBox");
+            isBoxMoving = true;
+            CancelInvoke("InvokeisBoxMoving");
         }
         if (boxType == BoxType.JumpingBox)
         {
             if (other.gameObject.tag.Equals("Ground"))
             {
                 other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-                if(other.gameObject.GetComponent<CatController>() != null)
-                    other.gameObject.GetComponent<CatController>().isJumping = false;
+                if(other.gameObject.GetComponent<Player.PlayerController>() != null)
+                    other.gameObject.GetComponent<Player.PlayerController>().isJumping = false;
                 other.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector3.up * jumpForce);
             }
         }
@@ -97,7 +116,7 @@ public class Falling_block : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (boxType == BoxType.FallingBox)
+        if (boxType == BoxType.DestroyBox)
         {
             if (other.gameObject.tag.Equals("Ground"))
             {
@@ -106,14 +125,14 @@ public class Falling_block : MonoBehaviour
             }
         }
 
-        if (boxType == BoxType.SwtichBox && dropBox == true)
+        if (boxType == BoxType.MoveBox && isBoxMoving == true)
         {
-            Invoke("InvokeDropBox", 1f);
+            Invoke("InvokeisBoxMoving", 1f);
         }
     }
 
-    void InvokeDropBox()
+    void InvokeisBoxMoving()
     {
-        dropBox = !dropBox;
+        isBoxMoving = !isBoxMoving;
     }
 }

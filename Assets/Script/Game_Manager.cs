@@ -28,8 +28,6 @@ public class Game_Manager : MonoBehaviourPun
     SpriteRenderer spriteRenderer;
 
     public int Key = 0;
-    public int Button_pressed = 0;
-
     private void Update()
     {
         if(Stage[CurrentStage-1].Chapter[CurrentChapter-1] == 0)
@@ -39,11 +37,11 @@ public class Game_Manager : MonoBehaviourPun
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            leave();
+            LoadLobby();
         }
     }
 
-    public void leave()
+    public void LoadLobby()
     {
         PhotonNetwork.LeaveRoom();
         Invoke("OnLeftRoom", 0.3f);
@@ -57,7 +55,7 @@ public class Game_Manager : MonoBehaviourPun
         SceneManager.LoadScene("Lobby");
     }
 
-[PunRPC]
+    [PunRPC]
     public void rpcPass()
     {
         ++gameClear;
@@ -77,7 +75,6 @@ public class Game_Manager : MonoBehaviourPun
             }
 
             ViewChanger.instance.CamOnMyPlayer();
-
             gameClear = 0;
         }
     }
@@ -85,31 +82,13 @@ public class Game_Manager : MonoBehaviourPun
     {
         if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount == gameClear)
         {
-            PhotonNetwork.LoadLevel("2-1");
+            PhotonNetwork.LoadLevel(CurrentStage.ToString() + "-" + CurrentChapter.ToString());
         }
     }
 
     public void ChangeValue(int value)
     {
         Stage[CurrentStage - 1].Chapter[CurrentChapter - 1] -= value;
-    }
-
-    [PunRPC]
-    public void GetKey()
-    {
-        Key++;
-    }
-
-    [PunRPC]
-    public void Button_Interaction_1()
-    {
-        Button_pressed++;
-    }
-   
-    [PunRPC]
-    public void Button_Interaction_0()
-    {
-        Button_pressed--;
     }
 
     // Start is called before the first frame update
@@ -126,20 +105,8 @@ public class Game_Manager : MonoBehaviourPun
         }
         else
         {
-            //Debug.LogFormat("We are Instantiating LocalPlayer from {0}", Application.loadedLevelName);
             GameObject temp = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
-            // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
 
         }
-    }
-
-    public void ChangeScene()
-    {
-        Invoke("test", 1f);
-    }
-
-    public void test()
-    {
-        SceneManager.LoadScene("Lobby");
     }
 }
