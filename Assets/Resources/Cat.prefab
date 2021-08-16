@@ -112,7 +112,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.9}
+  m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0
 --- !u!50 &4758055915754815316
 Rigidbody2D:
@@ -133,7 +133,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1056016760
 MonoBehaviour:
@@ -225,6 +225,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 3108424491726315753, guid: 906a260739388d14ea84789f2babcf3d, type: 3}
   - {fileID: 6830297506581310004, guid: 36a307cab4931a34bb6e2c3bfc92bb8b, type: 3}
+  - {fileID: 3327662044317159078, guid: f5d1c949fe2bcbc42a647c481c7f1afc, type: 3}
+  - {fileID: 4580377620743536722, guid: 7e3e87e5ef29f8140ae0cfecbdc86662, type: 3}
+  - {fileID: 939662085317777703, guid: ff279eab1abdda94db7dff9eec2c3236, type: 3}
+  - {fileID: 1470733481866590094, guid: 657523428a3b9964c867a02656049b39, type: 3}
+  - {fileID: 5436339739357409069, guid: a5cc05fbe5bada84fb12dad9360e4e82, type: 3}
+  - {fileID: 4499050518909141802, guid: 33b58010cfa36fb4fbb8d3965f146152, type: 3}
+  - {fileID: 1848428122873606833, guid: 41c7394da3d59a1408e854307887e78c, type: 3}
   isEmoticonOn: 0
 --- !u!114 &5395749784468869598
 MonoBehaviour:
@@ -246,3 +253,4 @@ MonoBehaviour:
   LB: {fileID: 0}
   RB: {fileID: 0}
   PlayerSprite: {fileID: 0}
+  spawnPos: {x: 0, y: 0}

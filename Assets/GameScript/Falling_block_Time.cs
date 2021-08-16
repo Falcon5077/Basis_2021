@@ -41,7 +41,9 @@ public class Falling_block_Time : MonoBehaviour
         }
         else if (setTime <= 0 && setTime > -1)
         {
-            Destroy(FallingBlock);
+            //Destroy(FallingBlock);
+            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 

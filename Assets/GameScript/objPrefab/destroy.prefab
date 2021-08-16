@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7257744828875535967}
   - component: {fileID: -8681736430833975013}
   - component: {fileID: 2529793180163616408}
+  - component: {fileID: -2653514298690724587}
   m_Layer: 0
   m_Name: destroy
   m_TagString: Ground
@@ -104,7 +105,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.925, y: 0.93}
+    oldSize: {x: 1.0277778, y: 1.0333333}
     newSize: {x: 0.925, y: 0.93}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -147,7 +148,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myButton: {fileID: 0}
+  myKey: {fileID: 0}
   boxType: 1
+  StartPos: {x: 0, y: 0, z: 0}
   EndPos: {x: 5, y: 0, z: 0}
   moveSpeed: 0
   jumpForce: 0
@@ -225,3 +228,16 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-2653514298690724587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7257744828875535966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173ec0bf12069624aa80e1ee3264ddd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartPos: {x: 0, y: 0, z: 0}

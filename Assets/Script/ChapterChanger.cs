@@ -17,6 +17,7 @@ public class ChapterChanger : MonoBehaviourPun
         {
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
             {
+                Game_Manager.instance.tmp = new Vector2(nextX, nextY);
                 Game_Manager.instance.photonView.RPC("rpcPass", RpcTarget.AllBuffered);
                 other.gameObject.GetComponent<CameraWork>().enabled = false;
                 other.gameObject.transform.position = new Vector2(nextX, nextY);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CameraWorks;
-
+using Player;
 
 public class ViewChanger : MonoBehaviour
 {
@@ -21,7 +21,12 @@ public class ViewChanger : MonoBehaviour
     {
         
     }
-    
+
+    public void ChangeSpawnPos(Vector3 temp)
+    {
+        if (Players[0] != null) Players[0].GetComponent<PlayerController>().spawnPos = temp;
+
+    }
     public void CamOnMyPlayer()
     { 
          if (Players[0] != null) Players[0].GetComponent<CameraWork>().enabled = true;

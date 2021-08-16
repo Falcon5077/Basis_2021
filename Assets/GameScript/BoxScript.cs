@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Player;
+using Photon.Pun;
 
 public class BoxScript : MonoBehaviour
 {
     Collider ObjectCollider;
     public buttonBox myButton;
+    public Pickup myKey;
 
     [System.Serializable]   // 인스펙터 창에서 볼수있게 하는 설정
     public enum BoxType
@@ -17,7 +19,8 @@ public class BoxScript : MonoBehaviour
         MoveBox,
         JumpingBox,
         TeleportBox,
-        ButtonBox
+        ButtonMoveBox,
+        ButtonDestroyBox
     }
 
     [Header(" - Must Set Box Type")]
@@ -25,7 +28,7 @@ public class BoxScript : MonoBehaviour
 
     Falling_block_Time fbT;
 
-    private Vector3 StartPos;
+    public Vector3 StartPos;
 
     [Header(" - MoveBox Option")]
     public Vector3 EndPos;
@@ -41,21 +44,18 @@ public class BoxScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (boxType == BoxType.DestroyBox || boxType == BoxType.ButtonBox) // 주성
+        if (boxType == BoxType.DestroyBox || boxType == BoxType.ButtonMoveBox) // 주성
         {
             fbT = gameObject.GetComponent<Falling_block_Time>();
         }
 
-        if(boxType == BoxType.MoveBox || boxType == BoxType.ButtonBox)//주성
-        {
-            StartPos = transform.position;
-        }
+        StartPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (boxType == BoxType.MoveBox || boxType == BoxType.ButtonBox)//주성
+        if (boxType == BoxType.MoveBox || boxType == BoxType.ButtonMoveBox)//주성
         {
             if (isBoxMoving)
             {
@@ -67,27 +67,79 @@ public class BoxScript : MonoBehaviour
             }
         }
 
-        if (boxType == BoxType.ButtonBox)//주성
+        if (boxType == BoxType.ButtonMoveBox)//주성
         {
-            if (myButton.Button_pressed == false)
+            if (myButton != null)
             {
-                isBoxMoving = false;
+                if (myButton.Button_pressed == false)
+                {
+                    isBoxMoving = false;
+                }
+                else if (myButton.Button_pressed == true)
+                {
+                    isBoxMoving = true;
+                }
             }
-            else if (myButton.Button_pressed == true)
+            
+            if (myKey != null)
             {
-                isBoxMoving = true;
+                if (myKey.hasKey == true)
+                {
+                    isBoxMoving = false;
+                }
+            }
+        }
+
+        if(boxType == BoxType.ButtonDestroyBox)
+        {
+            if (myButton != null)
+            {
+                if (myButton.Button_pressed == false)
+                {
+                    GetComponent<BoxCollider2D>().enabled = true;
+                    GetComponent<SpriteRenderer>().enabled = true;
+                }
+                else if (myButton.Button_pressed == true)
+                {
+                    GetComponent<BoxCollider2D>().enabled = false;
+                    GetComponent<SpriteRenderer>().enabled = false;
+                }
+            }
+
+            if (myKey != null)
+            {
+                if (myKey.hasKey == true)
+                {
+                    GetComponent<BoxCollider2D>().enabled = false;
+                    GetComponent<SpriteRenderer>().enabled = false;
+                }
+                else if (myKey.hasKey == false)
+                {
+                    GetComponent<BoxCollider2D>().enabled = true;
+                    GetComponent<SpriteRenderer>().enabled = true;
+                }
             }
         }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        
+        if( boxType == BoxType.ButtonMoveBox)
+        {
+            if (myButton.Button_pressed == false)
+                other.transform.position = this.transform.position + new Vector3(0, 0.8f, 0);
+        }
+        
         if (boxType == BoxType.DestroyBox)
         {
             if (other.gameObject.tag.Equals("Ground"))
             {
-                CancelInvoke("InvokeStopShake");
-                fbT.enabled = true;
+                if (fbT != null)
+                {
+                    CancelInvoke("InvokeStopShake");
+                    fbT.enabled = true;
+                }
             }
         }
 
@@ -117,6 +169,16 @@ public class BoxScript : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D other)
     {
+        /*
+        if (boxType == BoxType.MoveBox || boxType == BoxType.ButtonMoveBox)
+        {
+            if (other.transform.GetComponent<PhotonView>().IsMine)
+            {
+                other.transform.parent = null;
+                DontDestroyOnLoad(other.gameObject);
+            }
+        }
+        */
         if (boxType == BoxType.DestroyBox)
         {
             if (other.gameObject.tag.Equals("Ground"))

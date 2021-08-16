@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5715583403094344104}
   - component: {fileID: -3282482713273075146}
   - component: {fileID: 7775893660697914690}
+  - component: {fileID: 709716637}
   m_Layer: 0
   m_Name: Box
   m_TagString: Ground
@@ -123,7 +124,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.925, y: 0.93}
+    oldSize: {x: 1.0277778, y: 1.0333333}
     newSize: {x: 1.85, y: 1.86}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -188,3 +189,16 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &709716637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5715583403094344107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173ec0bf12069624aa80e1ee3264ddd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartPos: {x: 0, y: 0, z: 0}

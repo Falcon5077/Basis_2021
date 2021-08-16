@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
+using Player;
 
 [System.Serializable]
 public class StageList
@@ -16,6 +17,8 @@ public class Game_Manager : MonoBehaviourPun
 {
     //Stage[1].Chapter[0]
     public StageList[] Stage;
+    public StageList[] Stage2;
+
     public int CurrentChapter = 1;
     public int CurrentStage = 1;
     public bool CanNextStage = false;
@@ -27,6 +30,9 @@ public class Game_Manager : MonoBehaviourPun
     public static GameObject LocalPlayerInstance;
     SpriteRenderer spriteRenderer;
 
+    public int life = 5;
+    public Vector3 tmp;
+
     public int minSize;
     private void Update()
     {
@@ -34,13 +40,22 @@ public class Game_Manager : MonoBehaviourPun
         {
             CanNextStage = true;
         }
-
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            LoadLobby();
-        }
     }
 
+    public void Clear()
+    {
+        GameObject thisStage = GameObject.Find(CurrentStage + "-" + CurrentChapter);
+        Reset[] mItems = thisStage.GetComponentsInChildren<Reset>() as Reset[];
+        foreach (Reset r in mItems)
+        {
+            // 열쇠 초기화
+            // 오브젝트 초기화
+            r.PositionReset();
+            gameClear = 0;
+            CanNextStage = false;
+        }
+        Stage[CurrentStage - 1].Chapter[CurrentChapter - 1] = Stage2[CurrentStage - 1].Chapter[CurrentChapter - 1];
+    }
     public void LoadLobby()
     {
         PhotonNetwork.LeaveRoom();
@@ -75,8 +90,14 @@ public class Game_Manager : MonoBehaviourPun
             }
 
             ViewChanger.instance.CamOnMyPlayer();
+            ViewChanger.instance.ChangeSpawnPos(tmp);
             gameClear = 0;
         }
+    }
+
+    public void ChangeSpawn(float x, float y)
+    {
+        tmp = new Vector3(x, y, 0);
     }
     public void GameStart()
     {
@@ -94,6 +115,14 @@ public class Game_Manager : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
+        for (int i = 0; i < Stage.Length-1; i++)
+        {
+            for (int j = 0; j < Stage[i].Chapter.Length; j++)
+            {
+                Stage2[i].Chapter[j] = Stage[i].Chapter[j];
+            }
+        }
+
         GameObject canvas = GameObject.Find("Canvas");
         DontDestroyOnLoad(this.gameObject);
         DontDestroyOnLoad(canvas);

@@ -18,27 +18,13 @@ public class Emotion : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if(curruntEmotion != 0)
+        
+        if (curruntEmotion != 0)
         {
             isEmoticonOn = true;
             photonView.RPC("EmotionCall", RpcTarget.All, curruntEmotion);
         }
 
-        if (photonView.IsMine && !isEmoticonOn)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                curruntEmotion = 1;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                curruntEmotion = 2;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                curruntEmotion = 3;
-            }
-        }
     }
 
     void CanEmotion()
@@ -50,9 +36,11 @@ public class Emotion : MonoBehaviourPunCallbacks
     public void EmotionCall(int a)
     {
         curruntEmotion = a;
-        GameObject temp = Instantiate(m_emoticon[curruntEmotion], this.gameObject.transform);
-        Destroy(temp, 3f);
-        Invoke("CanEmotion", 3f);
+        GameObject temp = Instantiate(m_emoticon[curruntEmotion] ,this.gameObject.transform);
+        if(a != 4)
+            Destroy(temp, 2f);
+
+        Invoke("CanEmotion", 2f);
         curruntEmotion = 0;
     }
 }

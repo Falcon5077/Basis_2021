@@ -23,6 +23,30 @@ namespace Player
 
         public SpriteRenderer PlayerSprite;
 
+        public Vector2 spawnPos;
+
+        [PunRPC]
+        public void Restart()
+        {
+            if (photonView.IsMine)
+            {
+                Game_Manager.instance.life--;
+            }
+
+            if (Game_Manager.instance.life > 0)
+            {
+                transform.position = spawnPos;            // 위치 초기화
+                if(photonView.IsMine)
+                    GetComponent<CameraWork>().enabled = true;  // 카메라 초기화
+                Game_Manager.instance.Clear();
+
+                // 탈출 값 초기화
+            }
+            else
+            {
+                Game_Manager.instance.LoadLobby();
+            }
+        }
         #region MonoBehaviour Callbacks
 
         /// <summary>
@@ -79,6 +103,17 @@ namespace Player
         }
 
         #endregion
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC("Restart", RpcTarget.All);
+                }
+            }
+        }
 
         // Update is called once per frame
         void FixedUpdate()

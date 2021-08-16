@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3f48600467fbfd94e8b0e275a46b3e20, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d82afd3925fdcce4ab11f70c79c69456, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,7 +100,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.925, y: 0.93}
+    oldSize: {x: 1.2888889, y: 1.1511111}
     newSize: {x: 0.925, y: 0.93}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -121,10 +121,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562fd9fb40df64d46bd3abc98e4f25e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myButton: {fileID: 0}
   boxType: 4
-  StartPos: {x: 0, y: 0, z: 0}
   EndPos: {x: 5, y: 0, z: 0}
-  dropBox: 0
-  dropSpeed: 3
+  moveSpeed: 0
   jumpForce: 0
   tpTarget: {fileID: 0}
