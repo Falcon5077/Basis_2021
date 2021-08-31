@@ -38,6 +38,7 @@ public class Reset : MonoBehaviour
             GetComponent<SpriteRenderer>().enabled = true;
             StartPos = Obj.StartPos;
         }
+
         transform.position = StartPos;
 
     }

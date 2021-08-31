@@ -48,13 +48,13 @@ public class Game_Manager : MonoBehaviourPun
         Reset[] mItems = thisStage.GetComponentsInChildren<Reset>() as Reset[];
         foreach (Reset r in mItems)
         {
-            // 열쇠 초기화
-            // 오브젝트 초기화
+            // 맵 오브젝트 위치 및 값 초기화
             r.PositionReset();
-            gameClear = 0;
-            CanNextStage = false;
         }
-        Stage[CurrentStage - 1].Chapter[CurrentChapter - 1] = Stage2[CurrentStage - 1].Chapter[CurrentChapter - 1];
+        gameClear = 0;
+        CanNextStage = false;
+        Stage[CurrentStage - 1].Chapter[CurrentChapter - 1]
+            = Stage2[CurrentStage - 1].Chapter[CurrentChapter - 1];
     }
     public void LoadLobby()
     {

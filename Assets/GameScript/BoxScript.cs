@@ -85,6 +85,10 @@ public class BoxScript : MonoBehaviour
             {
                 if (myKey.hasKey == true)
                 {
+                    isBoxMoving = true;
+                }
+                else if (myKey.hasKey == false)
+                {
                     isBoxMoving = false;
                 }
             }
@@ -127,8 +131,16 @@ public class BoxScript : MonoBehaviour
         
         if( boxType == BoxType.ButtonMoveBox)
         {
-            if (myButton.Button_pressed == false)
-                other.transform.position = this.transform.position + new Vector3(0, 0.8f, 0);
+            if (myButton != null)
+            {
+                if (myButton.Button_pressed == false)
+                    other.transform.position = this.transform.position + new Vector3(0, 0.8f, 0);
+            }
+            if (myKey != null)
+            {
+                if (myKey.hasKey == false)
+                    other.transform.position = this.transform.position + new Vector3(0, 0.8f, 0);
+            }
         }
         
         if (boxType == BoxType.DestroyBox)

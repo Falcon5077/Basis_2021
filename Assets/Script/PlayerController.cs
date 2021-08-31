@@ -28,16 +28,23 @@ namespace Player
         [PunRPC]
         public void Restart()
         {
+            // 중복 호출을 막기 위한 if문
             if (photonView.IsMine)
             {
+                // 라이프 1 감소
                 Game_Manager.instance.life--;
             }
 
+            // 라이프가 0 이상이면
             if (Game_Manager.instance.life > 0)
             {
-                transform.position = spawnPos;            // 위치 초기화
-                if(photonView.IsMine)
-                    GetComponent<CameraWork>().enabled = true;  // 카메라 초기화
+                // 플레이어 위치 초기화
+                transform.position = spawnPos;
+
+                // 카메라 위치 동기화 On
+                if (photonView.IsMine)
+                    GetComponent<CameraWork>().enabled = true;  
+
                 Game_Manager.instance.Clear();
 
                 // 탈출 값 초기화
@@ -106,11 +113,14 @@ namespace Player
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            // Esc를 눌렀다면
+            if (Input.GetKeyDown(KeyCode.Escape))   
             {
-                if (PhotonNetwork.IsMasterClient)
+                // 로컬이 마스터클라이언트(host)인지 체크
+                if (PhotonNetwork.IsMasterClient)   
                 {
-                    photonView.RPC("Restart", RpcTarget.All);
+                    // Restart 함수를 실행하라고 플레이어 전체에게 송신
+                    photonView.RPC("Restart", RpcTarget.All);   
                 }
             }
         }
