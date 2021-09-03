@@ -9,4 +9,6 @@
 
 구글 스토어에 등록하시려면 Photn Network의 유료 플랜을 이용하셔야 합니다.
 
+게임의 플레이는 Build 폴더 혹은 Build 브랜치를 참고해주세요.
+
 contact : royale@kakao.com
